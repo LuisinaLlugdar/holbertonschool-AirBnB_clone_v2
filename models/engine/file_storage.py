@@ -57,7 +57,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """instance method obj from __objects"""
+        """public instance method obj from __objects"""
         if obj is not None and \
                 obj.__class__.__name__ + "." + obj.id in FileStorage.__objects:
             del FileStorage.__objects[obj.__class__.__name__ + "." + obj.id]
