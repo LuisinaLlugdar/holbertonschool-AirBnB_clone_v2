@@ -112,22 +112,23 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
-
+    
+#update do create, allow more parameters, str, float and int
     def do_create(self, args):
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
-
+        
         argum = args.split()
         if argum[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
         new_instance = HBNBCommand.classes[argum[0]]()
-        for i in argum[1:]:
-            key = i.split('=')[0]
-            value = i.split('=')[1]
+        for parameters in argum[1:]:
+            key = parameters.split("=")[0]
+            value = parameters.split("=")[1]
 
             if hasattr(new_instance, key) is True:
                 if "\"" in value:
@@ -144,10 +145,8 @@ class HBNBCommand(cmd.Cmd):
                 setattr(new_instance, key, value)
             else:
                 pass
-
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -229,11 +228,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
@@ -246,7 +245,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all().items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)

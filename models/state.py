@@ -3,21 +3,28 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-import models
+from os import getenv
 
 
+env = getenv("HBNB_TYPE_STORAGE")
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = "states"
-    name = Column(String(128), nullable=False)
-    """ Establish relationship with City class, using DB as storage method """
-    cities = relationship('City', backref='state', cascade='all, delete_orphan')
+    if env == 'db':
+        __tablename__ = 'states'
+        name = name = Column(String(128), nullable=False)
+        """relationship with tha class City"""
+        cities = relationship('City', cascade='all, delete, delete-orphan',
+                            backref='state')
+    else:
+        name = ''
+    
+        @property
+        def cities(self):
+            from models.city import City
+            from models import storage
 
-    @property
-    def cities(self, cls=None):
-        """ Getter for City instances, using FileStorage as storage method """
-        cities_state = []
-        instances = models.storage.all(cls)
-        for k, elem in instances.items():
-            cities_state.append(elem)
-        return cities_state
+            results = []
+            for element in storage.all(City).values():
+                if self.id == element.state_id:
+                    results.append(storage.all(City)[element])
+            return results
