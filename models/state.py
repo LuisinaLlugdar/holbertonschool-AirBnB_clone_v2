@@ -9,8 +9,8 @@ from os import getenv
 env = getenv("HBNB_TYPE_STORAGE")
 class State(BaseModel, Base):
     """ State class """
+    __tablename__ = 'states'
     if env == 'db':
-        __tablename__ = 'states'
         name = name = Column(String(128), nullable=False)
         """relationship with tha class City"""
         cities = relationship('City', cascade='all, delete, delete-orphan',
