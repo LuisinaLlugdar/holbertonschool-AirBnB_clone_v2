@@ -21,14 +21,13 @@ class DBStorage:
         __engine: set to None
         __session: set to None
     """
-
-    valid_classes = {"Amenity": Amenity, "City": City,
-                     "Place": Place, "Review": Review,
-                     "State": State, "User": User}
     orm_mapped_classes = {
         "City": City,
         "State": State,
-        "User": User
+        "User": User,
+        "Place": Place,
+        "Review": Review,
+        "Amenity": Amenity
     }
     __engine = None
     __session = None
