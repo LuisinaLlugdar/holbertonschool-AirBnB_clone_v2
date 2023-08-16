@@ -51,15 +51,15 @@ def python_text(text="is cool"):
 @app.route("/number/<int:n>", strict_slashes=False)
 def integer_n(n):
     """ Displays a specific message when route is '/number/<n>' """
-    if type(n) is int:
+    if type(n) == int:
         return f"{n} is a number"
 
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
 def template_n(n):
     """ Displays a specific message when route is '/number_template/<n>' """
-    if type(n) is int:
-        return render_template('5-number.html', n=n)
+    if type(n) == int:
+        return render_template("5-number.html", n=n)
 
 
 if __name__ == '__main__':
