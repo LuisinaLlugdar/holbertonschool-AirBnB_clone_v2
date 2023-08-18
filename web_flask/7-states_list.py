@@ -8,6 +8,7 @@ Script that starts a Flask web application:
 """
 from flask import Flask, render_template
 from models import storage
+from models import *
 app = Flask(__name__)
 
 
@@ -16,7 +17,8 @@ def teardown_storage():
     """Remove the current SQLAlchemy Session after each request"""
     storage.close()
 
-@app.route("/states_list>", strict_slashes=False)
+
+@app.route("/states_list", strict_slashes=False)
 def states_list():
     """ Displays a specific message when route is '/states_list' """
     return render_template("7-states_list.html",
