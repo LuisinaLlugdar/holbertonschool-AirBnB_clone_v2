@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown_storage():
+def teardown_storage(self):
     """Remove the current SQLAlchemy Session after each request"""
     storage.close()
 
@@ -21,7 +21,7 @@ def teardown_storage():
 @app.route("/states_list", strict_slashes=False)
 def states_list():
     """ Displays a specific message when route is '/states_list' """
-    return render_template("7-states_list.html",
+    return render_template('7-states_list.html',
                            states=storage.all("State").values())
 
 
